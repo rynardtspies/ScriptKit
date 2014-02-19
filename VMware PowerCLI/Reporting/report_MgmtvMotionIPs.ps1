@@ -1,5 +1,13 @@
-$vcenter = "vcenter.spiesr.com"
+#Author: Rynardt Spies
+#Author Contact: rynardt.spies@virtualvcp.com / www.virtualvcp.com / @rynardtspies
+#Version: v1.00.00
+#Updated: February 2014
+#Report on the Management and vMotion IP Addresses (vmk)
+
+
+$vcenter = "vcenter.domain"
 $clusters = @("Cluster01")
+$reportfile = "c:\report_MgmtvMotionIPs_report.csv"
 
 connect-viserver $vcenter
 
@@ -20,8 +28,7 @@ foreach ($cluster in $clusters){
 		$row.vMotionEnabled = $adapter.vMotionEnabled
 		$report += $row
 		}
-		
 	}
 }
-$report | export-csv "c:\report.csv" -NoTypeInformation
+$report | export-csv $reportfile -NoTypeInformation
 Disconnect-VIServer $vcenter -confirm:$false
