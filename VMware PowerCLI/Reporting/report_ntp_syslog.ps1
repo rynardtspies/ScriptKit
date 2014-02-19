@@ -1,4 +1,11 @@
-$vcenter = "vcenter.spiesr.com"
+#Author: Rynardt Spies
+#Author Contact: rynardt.spies@virtualvcp.com / www.virtualvcp.com / @rynardtspies
+#Version: v1.00.00
+#Updated: February 2014
+#Report the configured NTP Servers as well as the Configured Syslog server
+
+
+$vcenter = "vcenter.domain"
 $clusters = @("Cheshunt")
 $ReportFile = "C:\ntp_syslog_report.csv"
 
