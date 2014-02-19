@@ -1,1 +1,7 @@
-This project is to colect all administration scripts we use for Powershell (WIndows) and PowerCLI (VMware)
+This project is to colect all administration scripts we use for Powershell (WIndows) and PowerCLI (VMware).
+
+Please do development work in the development branch. After dev, merge development into test.
+
+Once tested,and if accespted, I will merge into master.
+
+Rynardt
