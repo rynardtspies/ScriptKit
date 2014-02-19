@@ -17,20 +17,20 @@ connect-viserver $vcenter
 #Import hosts from a CSV file which contains the fields: Hostname,vmotion1IP,vmotion1sm,vmotion1vs,vmotion1pg,vmotion2IP,vmotion2sm,vmotion2vs,vmotion2pg
 $hosts = Import-csv "create_vmotion_vmk-list.csv"
 
-foreach ($Host in $hosts){
-	$esxhost = Get-VMhost $Host.HostName
+foreach ($iHost in $hosts){
+	$esxhost = Get-VMhost $iHost.HostName
 	
 	###VMK1 SECTION###
 	#Get the vSwitch where vmk1 will be added to 
-	$myVirtualSwitch = Get-VirtualSwitch -VMHost $esxhost -Name $Host.vmotion1vs
+	$myVirtualSwitch = Get-VirtualSwitch -VMHost $esxhost -Name $iHost.vmotion1vs
 	#Add vmk1
-	New-VMHostNetworkAdapter -VMHost $esxhost -Portgroup $Host.vmotion1pg -VirtualSwitch $myVirtualSwitch -IP $Host.vmotion1IP -SubnetMask $Host.vmotion1sm -mtu $setMTUvalue -ManagementTrafficEnabled:$false -FaultToleranceLoggingEnabled:$false -VMotionEnabled:$true
+	New-VMHostNetworkAdapter -VMHost $esxhost -Portgroup $iHost.vmotion1pg -VirtualSwitch $myVirtualSwitch -IP $iHost.vmotion1IP -SubnetMask $iHost.vmotion1sm -mtu $setMTUvalue -ManagementTrafficEnabled:$false -FaultToleranceLoggingEnabled:$false -VMotionEnabled:$true
 	
 	###VMK2 SECTION###	
 	#Get the vSwitch where vmk2 will be added to 
-	$myVirtualSwitch = Get-VirtualSwitch -VMHost $esxhost -Name $Host.vmotion2vs
+	$myVirtualSwitch = Get-VirtualSwitch -VMHost $esxhost -Name $iHost.vmotion2vs
 	#Add vmk2
-	New-VMHostNetworkAdapter -VMHost $esxhost -Portgroup $Host.vmotion2pg -VirtualSwitch $myVirtualSwitch -IP $Host.vmotion2IP -SubnetMask $Host.vmotion2sm -mtu $setMTUvalue -ManagementTrafficEnabled:$false -FaultToleranceLoggingEnabled:$false -VMotionEnabled:$true
+	New-VMHostNetworkAdapter -VMHost $esxhost -Portgroup $iHost.vmotion2pg -VirtualSwitch $myVirtualSwitch -IP $iHost.vmotion2IP -SubnetMask $iHost.vmotion2sm -mtu $setMTUvalue -ManagementTrafficEnabled:$false -FaultToleranceLoggingEnabled:$false -VMotionEnabled:$true
 }
 Write-Output "Disconnecting from vSphere Environment: $vcenter"
 disconnect-viserver $vcenter -confirm:$false
