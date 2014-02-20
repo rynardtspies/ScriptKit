@@ -29,7 +29,7 @@ function freespace
     [math]::Round($datastore.FreeSpaceMB/1024,2)
 }
 
-#Functions have been defined. Now Start the script.
+#Functions have been defined.
 
 $datastores = Get-Datastore | sort Name
 $Report = @()
