@@ -1,1 +1,5 @@
-This project is to colect all administration scripts we use for Powershell (WIndows) and PowerCLI (VMware).
+ScriptKit is a repository for storing PowerShell and PowerCLI system administration scripts for Windows and
+VMware products such as vSphere and Horizon View.
+
+Although the original idea is to gather scripts for PowerShell, scripts written in other scripting languages
+will also be considered.
