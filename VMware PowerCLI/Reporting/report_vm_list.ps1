@@ -9,7 +9,7 @@
 #===========================================================================================
 
 #Specify vcenter servers, separated by comas
-$vcenters = @("vcenter.spiesr.com")
+$vcenters = @("vcenter.domain","vcenter2.domain")
 $ReportFile = "C:\TEMP\report_vm_list.csv"
 
 #Connect to all of the vcenter servers
