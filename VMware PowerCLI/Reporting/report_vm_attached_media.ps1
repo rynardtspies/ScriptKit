@@ -1,13 +1,23 @@
+#Author: Rynardt Spies
+#Author Contact: rynardt.spies@virtualvcp.com / www.virtualvcp.com / @rynardtspies
+#Updated: February 2014
+#Version: 1.00.00
+# Description:	Return all CD and Floppy Devices for each VM, including connection state
+#===========================================================================================
 
-
-$vcenter = "vcenter.spiesr.com"$clusters = @("Cluster01")
+#Enter vCenter Server Name or IP Address
+$vcenter = "vcenter.domain"
+#Specify a datacenter name, or cluster names, separated by comas$clusters = @("Cluster01","Cluster02")
+#Specify there report file name and loccation
 $ReportFile = "C:\TEMP\report_vm_atached_media-report.csv"
 $report = @()
 
+#Connect to the vcenter server
 Write-Output "Connecting to vSphere environment $vcenter"connect-viserver $vcenter
 
+#Cycle through each specified cluster or datacenter object in $clusters
 foreach ($cluster in $clusters){
-	$vms = Get-VM
+	$vms = Get-VM -Location $cluster
 	foreach ($vm in $vms){
 		$CDDrives = Get-CDDrive $vm
 		$FloppyDrives = Get-FloppyDrive $vm
@@ -23,7 +33,6 @@ foreach ($cluster in $clusters){
 			$row.CDStartConnected = $CDDrive.ConnectionState.StartConnected
 			$report += $row
 		}
-		 
 		foreach ($FloppyDrive in $FloppyDrives){
 			$row = "" | Select Cluster, VMName, CDDriveName, CDISOPath, CDHostDevice, CDRemoteDevice, CDConnected, CDStartConnected, FloppyDriveName, FloppyImagePath, FloppyHostdevice, FloppyRemoteDevice, FloppyConnected, FloppyStartConnected
 			$row.Cluster = $cluster
@@ -38,7 +47,8 @@ foreach ($cluster in $clusters){
 		}
 	}
 }
-
+Write-Output "Writing the report to $ReportFile"
 $report | export-csv $ReportFile -NoTypeInformation
 
+Write-Output "Disconnecting from $vcenter"
 Disconnect-VIServer $vcenter -confirm:$false
