@@ -12,7 +12,7 @@ foreach ($cluster in $clusters){
 		$CDDrives = Get-CDDrive $vm
 		$FloppyDrives = Get-FloppyDrive $vm
 		foreach ($CDDrive in $CDDrives){
-			$row = "" | Select Cluster, VMName, CDDriveName, CDISOPath, CDHostDevice, CDRemoteDevice, CDConnected, CDStartConnected
+			$row = "" | Select Cluster, VMName, CDDriveName, CDISOPath, CDHostDevice, CDRemoteDevice, CDConnected, CDStartConnected, FloppyDriveName, FloppyImagePath, FloppyHostdevice, FloppyRemoteDevice, FloppyConnected, FloppyStartConnected
 			$row.Cluster = $cluster
 			$row.VMName = $vm
 			$row.CDDriveName = $CDDrive.Name
@@ -25,7 +25,16 @@ foreach ($cluster in $clusters){
 		}
 		 
 		foreach ($FloppyDrive in $FloppyDrives){
-
+			$row = "" | Select Cluster, VMName, CDDriveName, CDISOPath, CDHostDevice, CDRemoteDevice, CDConnected, CDStartConnected, FloppyDriveName, FloppyImagePath, FloppyHostdevice, FloppyRemoteDevice, FloppyConnected, FloppyStartConnected
+			$row.Cluster = $cluster
+			$row.VMName = $vm
+			$row.FloppyDriveName = $FloppyDrive.Name
+			$row.FloppyImagePath = $FloppyDrive.FloppyImagePath
+			$row.FloppyHostDevice = $FloppyDrive.HostDevice
+			$row.FloppyRemoteDevice = $FloppyDrive.RemoteDevice
+			$row.FloppyConnected = $FloppyDrive.ConnectionState.Connected
+			$row.FloppyStartConnected = $FloppyDrive.ConnectionState.StartConnected
+			$report += $row
 		}
 	}
 }
