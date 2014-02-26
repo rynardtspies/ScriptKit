@@ -31,7 +31,7 @@ Write-Output "Successfully connected to: $ConnectionResult"
 foreach ($cluster in $clusters){
 	#Test if the current $cluster exists in the environment. If it doesn't continue to next $cluster
 	if(!(Get-Cluster $cluster -ErrorAction SilentlyContinue)){
-		Write-Output "Cluster $cluster could not be found"
+		Write-Output "Object $cluster could not be found"
 		Continue
 	}
 	foreach ($esxhost in (Get-VMHost -Location $cluster)){

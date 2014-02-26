@@ -1,30 +1,36 @@
 #Author: Rynardt Spies
 #Author Contact: rynardt.spies@virtualvcp.com / www.virtualvcp.com / @rynardtspies
 #Updated: February 2014
-#Version: 1.00.00
+#Version: 1.00.01
 # Description:	Script to return all datastores seen in vCenter as well as their capacity,
 # used space and free space.
+#Tested with: VMware PowerCLI 5.5 Release 1.
 #===========================================================================================
 
 $vcenter = "vcenter.domain" # Enter the FQDN of the vCenter or ESX Server.
 $ReportFile = "c:\TEMP\report_datastores_space.csv"
 
-Write-Output "Connecting to vSphere Environment $vcenter"
-Connect-VIServer $vcenter
+#Clear the console screen
+Clear Screen
+
+write-Output "Connecting to vSphere Environment $vcenter"
+#Try to connect to $vcenter. If not, fail gracefully with a message
+if (!($ConnectionResult = Connect-VIServer $vcenter -ErrorAction SilentlyContinue)){
+	Write-Output "Could not connect to $vcenter. Check server address."
+	break
+	}
+Write-Output "Successfully connected to: $ConnectionResult"
 
 #Let's define some functions to  call upon later in the script
-function usedspace
-{
+function usedspace{
     param($ds)
     [math]::Round(($ds.CapacityMB - $ds.FreeSpaceMB)/1024,2)
 }
-function dscapacity
-{
+function dscapacity{
     param($ds)
     [math]::Round($datastore.CapacityMB/1024,2)
 }
-function freespace
-{
+function freespace{
     param($ds)
     [math]::Round($datastore.FreeSpaceMB/1024,2)
 }

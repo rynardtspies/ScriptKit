@@ -1,24 +1,39 @@
 #Author: Rynardt Spies
 #Author Contact: rynardt.spies@virtualvcp.com / www.virtualvcp.com / @rynardtspies
-#Version: v1.00.00
+#Version: v1.00.01
 #Updated: February 2014
-#Description: Report WWN Numbers
+#Description: Report WWN Numbers for hosts specified in $clusters
+#Tested with: VMware PowerCLI 5.5 Release 1.
+#====================================================================================
 
-#Initialize variables
+#Specify vCenter Server Name or IP address
 $vcenter = "vcenter.domain"
-$clusters = @("cluster1","cluster2")
-$ReportFile = "c:\report_host_wwn.csv"
+#Specify the datacenters or cluster objects to include hosts from, separated by comas
+$clusters = @("cluster01","cluster02")
+#Specify the file to write the report to
+$ReportFile = "c:\TEMP\report_host_wwn.csv"
 $Report = @()
 
-#Connect to vCenter Server
-Write-Output "Connecting to vSphere Environment $vcenter"
-Connect-VIServer $vcenter
+#Clear the console screen
+Clear Screen
 
+write-Output "Connecting to vSphere Environment $vcenter"
+#Try to connect to $vcenter. If not, fail gracefully with a message
+if (!($ConnectionResult = Connect-VIServer $vcenter -ErrorAction SilentlyContinue)){
+	Write-Output "Could not connect to $vcenter. Check server address."
+	break
+	}
+Write-Output "Successfully connected to: $ConnectionResult"
 
 foreach ($cluster in $clusters) {
-    $vmhosts = $cluster | Get-vmhost
-    if ($null -ne $vmhosts) {
+	#Test if the current $cluster exists in the environment. If it doesn't continue to next $cluster
+	if(!(Get-Cluster $cluster -ErrorAction SilentlyContinue)){
+		Write-Output "Object $cluster could not be found"
+		Continue
+	}
+    if ($null -ne ($vmhosts = Get-VMHost -Location $cluster)) {
         foreach ($vmhost in $vmhosts) {
+			Write-Output "Getting HBA Information for $vmhost"
             $vmhostview = $vmhost | Get-View
             foreach ($hba in $vmhostview.config.storagedevice.hostbusadapter) {
                 if ($hba.PortWorldWideName) {
@@ -36,6 +51,8 @@ foreach ($cluster in $clusters) {
     }
 }
 
+Write-Output "Writing report to $ReportFile"
 $Report | export-csv $ReportFile -NoTypeInformation
+
 Write-Output "Disconnecting from vSphere Environment $vcenter"
 Disconnect-VIServer $vcenter -Confirm:$false

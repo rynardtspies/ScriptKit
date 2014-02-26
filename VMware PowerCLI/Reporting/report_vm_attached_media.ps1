@@ -1,8 +1,9 @@
 #Author: Rynardt Spies
 #Author Contact: rynardt.spies@virtualvcp.com / www.virtualvcp.com / @rynardtspies
 #Updated: February 2014
-#Version: 1.00.00
+#Version: 1.00.01
 # Description:	Return all CD and Floppy Devices for each VM, including connection state
+#Tested with: VMware PowerCLI 5.5 Release 1.
 #===========================================================================================
 
 #Enter vCenter Server Name or IP Address
@@ -12,11 +13,24 @@ $vcenter = "vcenter.domain"
 $ReportFile = "C:\TEMP\report_vm_atached_media-report.csv"
 $report = @()
 
-#Connect to the vcenter server
-Write-Output "Connecting to vSphere environment $vcenter"connect-viserver $vcenter
+#Clear the console screen
+Clear Screen
+
+write-Output "Connecting to vSphere Environment $vcenter"
+#Try to connect to $vcenter. If not, fail gracefully with a message
+if (!($ConnectionResult = Connect-VIServer $vcenter -ErrorAction SilentlyContinue)){
+	Write-Output "Could not connect to $vcenter. Check server address."
+	break
+	}
+Write-Output "Successfully connected to: $ConnectionResult"
 
 #Cycle through each specified cluster or datacenter object in $clusters
 foreach ($cluster in $clusters){
+	#Test if the current $cluster exists in the environment. If it doesn't continue to next $cluster
+	if(!(Get-Cluster $cluster -ErrorAction SilentlyContinue)){
+		Write-Output "Object $cluster could not be found"
+		Continue
+	}
 	$vms = Get-VM -Location $cluster
 	foreach ($vm in $vms){
 		$CDDrives = Get-CDDrive $vm

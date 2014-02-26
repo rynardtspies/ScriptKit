@@ -9,6 +9,7 @@
 # virtual machines found in the servers.txt file. This is required by many financial industry
 # to prevent more than one concurrent remote console session to a virtual machine in order to
 # an administrator of a VM being shadowed remotely.
+#Tested with: VMware PowerCLI 5.5 Release 1.
 ###################################################################################################
 
 #Let's define some variables
@@ -17,10 +18,14 @@ $infile = "set_vm_max_console_sessions-list.csv" #Specify the list of virtual ma
 $ReportFile = "c:\TEMP\set_vm_max_console_sessions-report.csv" #The results will be saved in this file
 $ConsoleSessions = "1" #Specify the number of concurrent Remote Console Connections to allow per VM
 
-#Clear the console text and Connect to vCenter
-clear screen
-Write-Output "Connecting to vSphere Environment $vcenter"
-Connect-VIServer $vcenter
+Clear Screen
+write-Output "Connecting to vSphere environment: $vcenter"
+#Try to connect to $vcenter. If not, fail gracefully with a message
+if (!($ConnectionResult = Connect-VIServer $vcenter -ErrorAction SilentlyContinue)){
+	Write-Output "Could not connect to $vcenter"
+	break
+}
+Write-Output "Successfully connected to: $ConnectionResult"
 
 #Now, import the list of virtual machines from the provided csv file
 Write-Output "Importing Virtual Machine list from $infile"

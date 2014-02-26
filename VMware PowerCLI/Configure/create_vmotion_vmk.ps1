@@ -1,9 +1,10 @@
 #Author: Rynardt Spies
 #Author Contact: rynardt.spies@virtualvcp.com / www.virtualvcp.com / @rynardtspies
 #Updated: February 2014
-#Version: 1.00.00
+#Version: v1.00.01
 #Description: Creates up to two vMotion interfaces and configures them with details specified in a CSV
 #				file. For a single interface, comment out the entire vmk2 section.
+#Tested with: VMware PowerCLI 5.5 Release 1.
 #==============================================================================================
 
 #Configure the following variables before running the script.
@@ -11,8 +12,14 @@ $vcenter = "vcenter.domain"
 #Desired vmk NIC MTU Size (1500=Standard, 9000=Jumbo-Frames)
 $setMTUvalue = 1500
 
-Write-Output "Connecting to vSphere Environment: $vcenter"
-connect-viserver $vcenter
+Clear Screen
+write-Output "Connecting to vSphere environment: $vcenter"
+#Try to connect to $vcenter. If not, fail gracefully with a message
+if (!($ConnectionResult = Connect-VIServer $vcenter -ErrorAction SilentlyContinue)){
+	Write-Output "Could not connect to $vcenter"
+	break
+}
+Write-Output "Successfully connected to: $ConnectionResult"
 
 #Import hosts from a CSV file which contains the fields: Hostname,vmotion1IP,vmotion1sm,vmotion1vs,vmotion1pg,vmotion2IP,vmotion2sm,vmotion2vs,vmotion2pg
 $hosts = Import-csv "create_vmotion_vmk-list.csv"
