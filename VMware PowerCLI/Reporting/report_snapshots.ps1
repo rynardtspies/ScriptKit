@@ -1,6 +1,6 @@
 #Author: Rynardt Spies
 #Author Contact: rynardt.spies@virtualvcp.com / www.virtualvcp.com / @rynardtspies
-#Version: v1.00.00
+#Version: v1.00.01
 #Updated: March 2014
 #Report on the virtual machine snapshots created for each virtual machine in the specified cluster
 #Tested with: VMware PowerCLI 5.5 Release 1.
