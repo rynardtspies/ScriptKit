@@ -5,9 +5,9 @@
 #Report on the virtual machine snapshots created for each virtual machine in the specified cluster
 #Tested with: VMware PowerCLI 5.5 Release 1.
 
-$vcenter = "vcenter.spiesr.com"
-
-$clusters = @("cluster01")
+$vcenter = "vcenter.domain"
+#Specify cluster names separated by comas
+$clusters = @("cluster01","cluster02")
 $reportfile = "C:\Temp\report_snapshots-report.csv"
 
 if(!($ConnectionResult = Connect-VIServer $vcenter -ErrorAction SilentlyContinue)){
@@ -26,7 +26,7 @@ foreach ($cluster in $clusters){
 	foreach ($vm in $vms){
 		$snapshots = Get-Snapshot -VM $vm
 		if(!($null -eq $snapshots)){
-			Write-Output "Found snapshots for $vm
+			Write-Output "Found snapshots for $vm"
 			foreach ($snapshot in $snapshots) {
 				$row = "" | select VMName, Cluster, SnapshotName, Created, PowerState, SizeMB, ParentSnapshot, IsCurrent
 				$row.VMName = $vm.Name
