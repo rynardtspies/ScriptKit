@@ -4,11 +4,13 @@
 #Updated: February 2014
 #Report on the Management and vMotion IP Addresses (vmk)
 #Tested with: VMware PowerCLI 5.5 Release 1.
+#NOTE: This script will be replaced by report_host_vmknics.ps1 in the next release of
+# ScriptKit (V1.00.02)
 #===================================================================================
 
 #Specify the vCenter server name or IP Address
 $vcenter = "vcenter.domain"
-#Specify datacenter or cluster names to report on, separated by comas.
+#Specify datacenter or cluster names to report on, separated by commas.
 $clusters = @("Cluster01","Cluster02")
 $reportfile = "c:\TEMP\report_MgmtvMotionIPs_report.csv"
 
