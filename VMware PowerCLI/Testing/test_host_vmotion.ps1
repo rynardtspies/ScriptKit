@@ -14,7 +14,7 @@ $testvm = "TestVM"
 #Specify the cluster name to test
 $cluster = "ClusterName"
 #Enter the interval in seconds between migrations
-$interval = 30
+$interval = 60
 
 Clear Screen
 #Connect to vcenter server
@@ -34,7 +34,7 @@ if (!($actCluster = Get-Cluster $cluster -ErrorAction SilentlyContinue)){
 }
 Write-Output "Found Cluster: $actCluster on $ConnectionResult"
 
-$esxhosts = Get-VMhost -Location $actCluster
+$esxhosts = Get-VMhost -Location $actCluster | sort $_.Name
 if ($null -eq $esxhosts) {
 	Write-Output "No hosts found in cluster $actCluster"
 	Disconnect-VIServer $ConnectionResult -confirm:$false
