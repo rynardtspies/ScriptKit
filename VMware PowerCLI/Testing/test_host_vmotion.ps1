@@ -1,6 +1,6 @@
 #Author: Rynardt Spies
 #Author Contact: rynardt.spies@virtualvcp.com / www.virtualvcp.com / @rynardtspies
-#Version: v1.00.01
+#Version: v1.00.02
 #Updated: March 2014
 #Test vMotion on all hosts in specified cluster by migrating a test VM between hosts at
 # a set interval
@@ -46,7 +46,6 @@ if ($null -eq $esxhosts) {
 	Write-Output "Disconnected from $ConnectionResult"
 	break
 }
-
 #Confirm that the testvm exists
 if (!($migVM = Get-VM $testvm -ErrorAction SilentlyContinue)){
 	Write-Output "The VM $testvm was not found! Exiting..."
@@ -60,21 +59,25 @@ Write-Output "All network connectivity testing to $migVM will be carried out usi
 #Ensure that the test VM is on the first host in the cluster, if not migrate it to the host
 if (!($migVM.VMHost -eq  $esxhosts[0])){
 	Write-Output "Moving $migVM to first host in cluster $cluster"
-	Move-VM $migVM -Destination $esxhosts[0] | select Name,PowerState,VMHost
+	if (!($MigResult = Move-VM $migVM -Destination $esxhosts[0] | select Name,PowerState,VMHost)){
+		Write-Output "Migration of $migVM to $esxhosts[0] failed. Check vMotion configuration."
+		Write-Output "The script will now exit."
+		break
+	}
 	Write-Output "Testing network connectivity to $migVM on $TestVMIP..."
 	if ($PingResult = Test-Connection $TestVMIP -Count $pingtestpacketcount -Quiet){
 		Write-Output "Network connectivity test to $migVM successful. "
 	} else {
 		write-output "Network connectivity test to $migVM failed..."
 	}
-	$row = "" | select VMName, VMHostName, TestedIP, PingTestPass
+	$row = "" | select VMName, SrcVMHostName, DestVMHostName, TestedIP, PingTestPass
 	$row.VMName = $migVM.Name
-	$row.VMHostName = $migVM.VMHost
+	$row.SrcVMHostName = $migVM.VMHost
+	$row.DestVMHostName = $MigResult.VMHost
 	$row.TestedIP = $TestVMIP
 	$row.PingTestPass = $PingResult
 	$report += $row
 }
-	
 for ($i = 1; $i -le ($esxhosts.count -1); $i++){
 	#Refresh $migVM details to current residing host
 	$migVM = Get-VM $testvm
@@ -82,16 +85,27 @@ for ($i = 1; $i -le ($esxhosts.count -1); $i++){
 	Write-Output "Waiting $interval seconds before next migration..."
 	Start-Sleep -s $interval
 	Write-Output "Migrating $migVM to $nextVMHost..."
-	Move-VM $migVM -Destination $nextVMHost |select Name,PowerState,VMHost
+	if (!($MigResult = Move-VM $migVM -Destination $nextVMHost -ErrorAction SilentlyContinue |select Name,PowerState,VMHost)){
+		Write-Output "Migration of $migVM to $nextVMHost failed. Check vMotion configuration..."
+		$row = "" | select VMName, SrcVMHostName, DestVMHostName, TestedIP, PingTestPass
+		$row.VMName = $migVM.Name
+		$row.SrcVMHostName = $migVM.VMHost
+		$row.DestVMHostName = $nextVMHost.Name
+		$row.TestedIP = "Not tested - vMotion Migration Failed"
+		$row.PingTestPass = "Not tested - vMotion Migration Failed"
+		$report += $row
+		Continue
+	}
 	Write-Output "Testing network connectivity to $migVM on $TestVMIP..."
 	if ($PingResult = Test-Connection $TestVMIP -Count $pingtestpacketcount -Quiet){
 		Write-Output "Network connectivity test to $migVM successful. "
 	} else {
 		write-output "Network connectivity test to $migVM failed..."
 	}
-	$row = "" | select VMName, VMHostName, TestedIP, PingTestPass
+	$row = "" | select VMName, SrcVMHostName, DestVMHostName, TestedIP, PingTestPass
 	$row.VMName = $migVM.Name
-	$row.VMHostName = $migVM.VMHost
+	$row.SrcVMHostName = $migVM.VMHost
+	$row.DestVMHostName =$MigResult.VMHost
 	$row.TestedIP = $TestVMIP
 	$row.PingTestPass = $PingResult
 	$report += $row
