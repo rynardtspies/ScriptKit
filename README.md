@@ -23,8 +23,6 @@ Reporting Scripts
 -----------------
 [VMware PowerCLI/Reporting/report_HBAConfig.ps1](https://github.com/rynardtspies/ScriptKit/blob/master/VMware%20PowerCLI/Reporting/report_HBAConfig.ps1) -- Report on the HBA Link Speed, HBA Queue Depth, HBA Topology of each ESXi host.
 
-[VMware PowerCLI/Reporting/report_MgmtvMotionIPs.ps1](https://github.com/rynardtspies/ScriptKit/blob/master/VMware%20PowerCLI/Reporting/report_MgmtvMotionIPs.ps1) -- Report on the Management and vMotion IP Addresses (vmk).
-
 [VMware PowerCLI/Reporting/report_ShellTimeOut.ps1](https://github.com/rynardtspies/ScriptKit/blob/master/VMware%20PowerCLI/Reporting/report_ShellTimeOut.ps1) -- Report on the ShellTimeOut Setting for all hosts in specified clusters/DC objects.
 
 [VMware PowerCLI/Reporting/report_datastore_space.ps1](https://github.com/rynardtspies/ScriptKit/blob/master/VMware%20PowerCLI/Reporting/report_datastore_space.ps1) -- Script to return all datastores seen in vCenter as well as their capacity, used space and free space.
