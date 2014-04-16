@@ -1,3 +1,19 @@
+# This file is part of ScriptKit.
+#
+#    ScriptKit is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    ScriptKit is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with ScriptKit.  If not, see <http://www.gnu.org/licenses/>
+#
+#===================================================================================
 #VMware Horizon View: Update Security Server External URL/IP Address
 #Author:  Gabrie van Zanten (www.gabesvirtualworld.com)
 #Author URL: http://www.gabesvirtualworld.com/enabling-vmware-view-4-6-pcoip-with-dynamic-ip-address/
@@ -6,6 +22,7 @@
 # Run this script on the View Connection Server
 #Version 1.01
 #Tested on: VMware Horizon View 5.x
+#Copyright (c) 2011 - 2014 Gabrie van Zanten
 #==================================================================================
 
 Add-PSSnapin VMware.VimAutomation.Core 

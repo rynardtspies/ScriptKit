@@ -1,3 +1,19 @@
+# This file is part of ScriptKit.
+#
+#    ScriptKit is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    ScriptKit is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with ScriptKit.  If not, see <http://www.gnu.org/licenses/>
+#
+#===================================================================================
 #Author: Rynardt Spies
 #Author Contact: rynardt.spies@virtualvcp.com / www.virtualvcp.com / @rynardtspies
 #Version: v1.00.00
@@ -6,6 +22,7 @@
 #Tested with: VMware PowerCLI 5.5 Release 1.
 #NOTE: This script will replace report_MgmtvMotionIPs.ps1 in the next release of
 # ScriptKit (V1.00.02)
+#Copyright (c) 2014 Rynardt Spies
 #===================================================================================
 
 #Specify the vCenter server name or IP Address

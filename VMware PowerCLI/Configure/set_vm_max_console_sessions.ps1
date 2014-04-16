@@ -1,3 +1,18 @@
+# This file is part of ScriptKit.
+#
+#    ScriptKit is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    ScriptKit is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with ScriptKit.  If not, see <http://www.gnu.org/licenses/>
+#
 ###################################################################################################
 # Title: Set Maximum Remote Console Sessions
 # Filename:	set_vm_max_console_sessions.ps1
@@ -9,7 +24,8 @@
 # virtual machines found in the servers.txt file. This is required by many financial industry
 # to prevent more than one concurrent remote console session to a virtual machine in order to
 # an administrator of a VM being shadowed remotely.
-#Tested with: VMware PowerCLI 5.5 Release 1.
+# Tested with: VMware PowerCLI 5.5 Release 1.
+# Copyright (c) 2010 - 2014 Rynardt Spies
 ###################################################################################################
 
 #Let's define some variables

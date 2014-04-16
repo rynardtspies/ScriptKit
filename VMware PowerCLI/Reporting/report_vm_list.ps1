@@ -1,3 +1,19 @@
+# This file is part of ScriptKit.
+#
+#    ScriptKit is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    ScriptKit is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with ScriptKit.  If not, see <http://www.gnu.org/licenses/>
+#
+#===================================================================================
 #Author: Rynardt Spies
 #Author Contact: rynardt.spies@virtualvcp.com / www.virtualvcp.com / @rynardtspies
 #Updated: February 2014
@@ -7,6 +23,7 @@
 #				Output is saved to a CSV file as specified in $ReportFile
 #				Helpful in large environments with many vCenter servers.
 #Tested with: VMware PowerCLI 5.5 Release 1.
+#Copyright (c) 2014 Rynardt Spies
 #===========================================================================================
 
 #Specify one or more vcenter servers (FQDN or IP), separated by comas

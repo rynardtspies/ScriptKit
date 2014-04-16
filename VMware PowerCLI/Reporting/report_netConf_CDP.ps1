@@ -1,3 +1,19 @@
+# This file is part of ScriptKit.
+#
+#    ScriptKit is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    ScriptKit is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with ScriptKit.  If not, see <http://www.gnu.org/licenses/>
+#
+#===================================================================================
 #Author: Rynardt Spies
 #Author Contact: rynardt.spies@virtualvcp.com / www.virtualvcp.com / @rynardtspies
 #Version: v1.00.01
@@ -7,6 +23,7 @@
 #Tested with: VMware PowerCLI 5.5 Release 1.
 
 #NOTE: This script needs to be updated to better display dvSwitch components
+#Copyright (c) 2010 - 2014 Rynardt Spies
 #===================================================================================
 
 #Specify some variable values first
