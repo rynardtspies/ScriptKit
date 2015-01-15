@@ -3,6 +3,8 @@ ScriptKit
 
 This is a collection of PowerCLI (PowerShell) scripts that VMware vSphere administrators can use in deploying and managing vSphere environments.
 
+In addition to PowerCLI (PowerShell), VBScripts could also be included in future updates for Windows OS related tasks, however it is assumed that all VBScripts will be rewritten in PowerShell eventually.
+
 A brief description of each script in the current release is included below:
 
 Configuration Scripts
@@ -40,6 +42,8 @@ Reporting Scripts
 [VMware PowerCLI/Reporting/report_vm_attached_media.ps1](https://github.com/rynardtspies/ScriptKit/blob/master/VMware%20PowerCLI/Reporting/report_vm_attached_media.ps1) -- Return all CD and Floppy Devices for each VM, including connection state.
 
 [VMware PowerCLI/Reporting/report_vm_list.ps1](https://github.com/rynardtspies/ScriptKit/blob/master/VMware%20PowerCLI/Reporting/report_vm_list.ps1) -- Reports the Name, vCenter, Datacenter, Cluster, Host and Folder for every virtual machine visible within the PowerCLI session. Also works when connected to multiple VI servers. Output is saved to a CSV file as specified in $ReportFile. Helpful in large environments with many vCenter servers.
+
+[VBScript/Windows OS/Reporting/GetDiskInfo/GetDiskInfo.vbs] https://github.com/rynardtspies/ScriptKit/blob/master/VBScript/Windows%20OS/Reporting/GetDiskInfo/GetDiskInfo.vbs) -- Report logical disk information such as drive letters, size, used and free space for each logical disk for servers included in the servers.txt file.
 
 Testing Scripts
 ---------------
