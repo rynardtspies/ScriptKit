@@ -1,4 +1,4 @@
-#Description: Find and optionally disbale all guest accounts in an Azure Account 
+#Description: Find and optionally disable all guest accounts in an Azure Account 
 #Required PSModules: AzureAD
 #Author: Rynardt Spies
 #Date: 09/03/2019
