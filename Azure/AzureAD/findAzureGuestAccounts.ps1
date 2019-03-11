@@ -3,8 +3,10 @@
 #Author: Rynardt Spies
 #Date: 09/03/2019
 
-#Set to true to automatically disable guest accounts found
-$DisableAllGuestAccounts = $false
+#Pass -DisableAllGuestAccounts:$true to enable all guest accounts. Use with caution.
+param (
+    [switch]$DisableAllGuestAccounts = $false #Pass -DisableAllGuestAccounts:$true as a script parameter to enable all guest accounts. Use with caution.
+)
 
 $Report = @()
 $UpdatedUser = ""
@@ -36,9 +38,7 @@ catch {
     }
 }
 
-
 ##Back to our code:
-
 $users = Get-AzureADUser
 
 foreach ($user in $users){
