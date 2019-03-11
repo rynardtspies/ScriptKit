@@ -7,6 +7,7 @@
 $DisableAllGuestAccounts = $false
 
 $Report = @()
+$UpdatedUser = ""
 
 #The following code snippet enables us to connect to AzureAD from an Automation Runbook.
 #Code published by: http://www.gi-architects.co.uk/2017/02/azure-ad-authentication-connect-azuread-in-azure-automation/
@@ -49,11 +50,15 @@ foreach ($user in $users){
             $UpdatedUser = Get-AzureADUser -ObjectId $user.ObjectId
             Write-Output("Guest Account: " + $UpdatedUser.DisplayName + " AccountEnabled: " + $UpdatedUser.AccountEnabled)
         }
+        if ($UpdatedUser.ObjectId -ne $user.ObjectId){
+            $UpdatedUser = Get-AzureADUser -ObjectId $user.ObjectId
+        }
+
         #Add the current user to the Report Array
         $row = "" | select-object DisplayName, UserPrincipalName, AccountEnabled
-        $row.DisplayName = $user.DisplayName
-        $row.UserPrincipalName = $user.UserPrincipalName
-        $row.AccountEnabled = $user.AccountEnabled
+        $row.DisplayName = $UpdatedUser.DisplayName
+        $row.UserPrincipalName = $UpdatedUser.UserPrincipalName
+        $row.AccountEnabled = $UpdatedUser.AccountEnabled
         $Report += $row
     }
 }
